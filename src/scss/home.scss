@@ -1,0 +1,272 @@
+//====================================================================================================
+$page: #F1DDC9;
+$link: #333333;
+$arrow: #D84727;
+
+.page {
+   background-color: #F1DDC9;
+   height: 505px;
+   width: 1110px;
+   margin: 57px auto;
+   max-height: 1200px;
+}
+
+.title {
+   font-size: 60px;
+   margin: 140px 0px 30px 314px;
+   padding-top: 60px;
+   line-height: 100px;
+
+   &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 95px;
+      background-color: black;
+      margin-left: 4px;
+   }
+}
+
+.way-kambas-mini-ebony__text {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-family: "Nunito";
+   line-height: 23px;
+}
+
+.discover {
+   margin: 50px 0px 30px 314px;
+   width: 74px;
+
+   &::after {
+      content: "";
+      display: block;
+      height: 1px;
+      width: 60px;
+      background-color: black;
+   }
+}
+
+.button-add-to-card {
+   width: 208px;
+   height: 62px;
+   background-color: #D84727;
+   margin: 0 0 0 400px;
+   color: #fff;
+   text-align: center;
+   padding-top: 12px;
+   display: inline-block;
+   font-size: 20px;
+}
+
+.button-logi-cicil {
+   display: inline-block;
+   margin: 0 0 0 50px;
+   background-color: transparent;
+   border: #D84727 2px solid;
+   width: 150px;
+   height: 62px;
+   text-align: center;
+   padding-top: 10px;
+}
+
+
+.arrow-left {
+   display: inline-block;
+   margin: 38px 0 0 970px;
+   width: 40px;
+   height: 40px;
+   background: transparent;
+   border: $arrow 2px solid;
+}
+
+.arrow-right {
+   margin-top: 38px;
+   width: 40px;
+   height: 40px;
+   margin-left: 20px;
+   background: $arrow;
+}
+
+.luxurious-eyewear {
+   padding: 50px 0;
+
+   // .luxurious-eyewear__row
+
+   &__row {
+      display: flex;
+      margin: 0 -15px;
+   }
+
+   // .luxurious-eyewear__colum
+
+   &__column {
+      flex: 0 1 50%;
+      padding: 0 15px;
+   }
+
+   // .luxurious-eyewear__item
+
+   &__item {
+      background: #fff;
+   }
+
+   // .luxurious-eyewear__title
+
+   &__title {
+      padding: 32px 0 8px 32px;
+      font-size: 28px;
+      line-height: 32px;
+   }
+
+   // .luxurious-eyewear__text
+
+   &__text {
+      padding-left: 32px;
+      padding-bottom: 6px;
+      color: #777777;
+      font-family: 'Nunito';
+   }
+
+   // .luxurious-eyewear__disco
+
+   &__discover {
+      font-family: "Taviraj-semi-bold";
+      padding-left: 32px;
+      color: #333333;
+
+      &::after {
+         content: "";
+         display: block;
+         height: 1px;
+         width: 99px;
+         background-color: black
+      }
+   }
+
+   // .luxurious-eyewear__image
+
+   &__image {
+      display: flex;
+      justify-content: end;
+   }
+}
+
+.monthly-deals {
+   padding: 50px 0;
+
+   // .monthly-deals__title
+
+   &__title {
+      font-size: 38px;
+      line-height: 40px;
+      text-align: left;
+      margin: 0 0 30px 0;
+
+      &::after {
+         content: "";
+         display: block;
+         height: 2px;
+         width: 104px;
+         background-color: black;
+         margin-left: 2px;
+      }
+   }
+
+   // .monthly-deals__row
+
+   &__row {
+      display: flex;
+      margin: 0 -15px;
+   }
+
+   // .monthly-deals__column
+
+   &__column {
+      flex: 0 1 25%;
+      padding: 0 15px;
+   }
+
+   // .monthly-deals__item
+
+   &__item {
+      background: #FFFFFF;
+      padding-left: 24px;
+      width: 255px;
+      height: 491px;
+   }
+
+   // .monthly-deals__image
+
+   &__image {
+      padding-bottom: 32px;
+   }
+
+   // .monthly-deals__subtitle
+
+   &__subtitle {
+      font-size: 24px;
+      line-height: 32px;
+      padding-bottom: 2px;
+   }
+
+   // .monthly-deals__discount
+
+   &__discount {
+      text-transform: uppercase;
+      padding-bottom: 6px;
+      color: #777777;
+   }
+
+   // .monthly-deals__price-lin
+
+   &__price-line-through {
+      text-decoration: line-through;
+      padding-bottom: 12px;
+      color: #777777;
+   }
+
+   // .monthly-deals__price
+
+   &__price {
+      font-size: 24px;
+      line-height: 32px;
+      padding-bottom: 30px;
+   }
+
+   // .monthly-deals__btn-love
+
+   &__btn-love {
+      display: flex;
+      border: 1px #D84727 solid;
+      align-items: center;
+      justify-content: center;
+      width: 39px;
+      height: 39px;
+   }
+
+   // .monthly-deals__btn-add-t
+
+   &__btn-add-to-card {
+      width: 158px;
+      height: 39px;
+      background: #D84727;
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+   }
+}
+
+.btn {
+
+   // .btn__row
+
+   &__row {
+      display: flex;
+      gap: 0px 8px;
+   }
+}
+
+//====================================================================================================

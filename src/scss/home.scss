@@ -1,3 +1,27 @@
 //====================================================================================================
+.container {
+   width: 150px;
+   margin: 300px auto;
+}
+
+.btn {
+   display: inline-block;
+   padding: 25px 35px;
+   font-size: 26px;
+   text-transform: uppercase;
+   text-align: center;
+   text-decoration: none;
+   color: white;
+   background-color: rgb(104, 104, 255);
+   border-radius: 7px;
+   border: 4px solid #d7d8ff;
+   cursor: pointer;
+   transition: 0.5s;
+}
+
+.disabled {
+   opacity: 0.5;
+}
+
 
 //====================================================================================================

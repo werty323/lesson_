@@ -7,6 +7,12 @@ import * as flsForms from "./files/forms/forms.js";
 import * as flsScroll from "./files/scroll/scroll.js";
 import "./files/script.js";
 ////////////////////////////////////////////////
-let say = "hello";
-console.log(say);
+var button = document.getElementById("btn");
+button.addEventListener("click", function () {
+   disableButton();
+});
+function disableButton() {
+   button.classList.add("disabled");
+}
+
 

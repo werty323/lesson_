@@ -7,12 +7,11 @@
 <body>
    <div class="wrapper">
       @@include('html/_header.htm',{})
-      <main class="page">
-         <div id="container" class="container"></div>
-         <div class="button">
-            <div id="btn" class="btn">кнопка</div>
-         </div>
-      </main>
+      <button class="next" id="nextMoveBtn" disabled>Следующий ход</button>
+      <div id="score">Очки: 0</div>
+      <div id="endGameMessage" class="hidden"></div>
+      <div id="container"></div>
+      <button class="reset" id="resetBtn">Начать заново</button>
       @@include('html/_footer.htm',{})
    </div>
    @@include('html/_popup.htm',{})

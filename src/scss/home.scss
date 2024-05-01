@@ -6,18 +6,18 @@
    text-align: center;
    text-decoration: none;
    color: white;
-   background-color: rgb(255, 104, 104);
+   background-color: rgb(255, 102, 102);
    border-radius: 7px;
    border: 4px solid #d7d8ff;
    cursor: pointer;
    transition: 0.3s;
    width: 200px;
-   margin: 40px 670px;
+   margin: 40px auto;
    user-select: none;
-   box-shadow: 0px 7px 15px 0px rgb(0, 0, 0);
+   box-shadow: 0px 7px 15px 0px rgb(255, 106, 106);
 
    &:active {
-      background-color: rgb(255, 74, 74);
+      background-color: rgb(255, 61, 61);
       transform: translateY(3px);
       box-shadow: none;
    }
@@ -37,12 +37,12 @@
    cursor: pointer;
    transition: 0.3s;
    width: 200px;
-   margin: 40px 670px;
+   margin: 40px auto;
    user-select: none;
    box-shadow: 0px 7px 15px 0px rgb(36, 65, 255);
 
    &:active {
-      background-color: rgb(104, 74, 255);
+      background-color: rgb(74, 131, 255);
       transform: translateY(3px);
       box-shadow: none;
    }
@@ -59,17 +59,40 @@
 .tile {
    width: 40px;
    height: 40px;
-   border: 1px solid black;
-   background-color: white;
+   border: 1px solid rgb(0, 0, 0);
+   background-color: rgb(255, 255, 255);
    position: absolute;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .ball {
-   width: 30px;
-   height: 30px;
-   background-color: red;
+   width: 25px;
+   height: 25px;
    border-radius: 50%;
-   position: absolute;
+   cursor: pointer;
+   transition: transform 0.2s;
+
+   &:hover {
+      transform: translate(0px, 7px);
+   }
+
+   &:active {
+      transform: translate(0px, -10px);
+      transition: transform none;
+      transform: scale(0.3);
+   }
+}
+
+.score {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 30px;
+}
+
+.massage {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 30px;
 }
 
 .hidden {

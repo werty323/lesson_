@@ -1,5 +1,9 @@
 import '../scss/style.scss';
+
+
+
 import './files/script.js';
+
 ////////////////////////////////////////////////
 const container = document.getElementById('container');
 const nextMoveButton = document.getElementById('nextMoveBtn');
@@ -8,19 +12,22 @@ const scoreDisplay = document.getElementById('score');
 const endGameMessage = document.getElementById('endGameMessage');
 
 let score = 0;
+let selectedBall = null;
+
 const palette = {
-   "red": "#ff0000",
-   "blue": "#0000ff",
-   "green": "#00ff00",
-   "yellow": "#ffff00",
-   "purple": "#800080",
-   "orange": "#ffa500"
+   red: '#ff0000',
+   blue: '#0000ff',
+   green: '#00ff00',
+   yellow: '#ffff00',
+   purple: '#800080',
+   orange: '#ffa500',
 };
+
 function getColorFromPalette(colorName) {
    if (palette.hasOwnProperty(colorName)) {
       return palette[colorName];
    } else {
-      console.error("Ошибка: Нет такого цвета в палитре.");
+      console.error('Ошибка: Нет такого цвета в палитре.');
       return null;
    }
 }
@@ -30,9 +37,61 @@ function isCellEmpty(x, y) {
       const tile = document.getElementById('plate_' + x + '_' + y);
       return !tile.querySelector('.ball');
    } else {
-      console.error("Ошибка: Неправильные координаты.");
+      console.error('Ошибка: Неправильные координаты.');
       return null;
    }
+}
+
+function parseCoordinates(str) {
+   const withoutPrefix = str.replace('plate_', '');
+   const parts = withoutPrefix.split('_');
+   const x = parseInt(parts[0], 10);
+   const y = parseInt(parts[1], 10);
+   return { x, y };
+}
+
+function toggleSelectedBall(event) {
+   const ball = event.target;
+   if (ball) {
+      if (selectedBall === ball) {
+         return;
+      }
+      if (selectedBall) {
+         selectedBall.classList.remove('active');
+      }
+      selectedBall = ball;
+      selectedBall.classList.add('active');
+      const { x, y } = parseCoordinates(selectedBall.parentElement.id);
+      console.log('Выбран шар в клетке: ', x, y);
+   }
+}
+
+function clickTile(event) {
+   const tile = event.target;
+   if (!tile.classList.contains('tile')) {
+      return;
+   }
+   const { x, y } = parseCoordinates(tile.id);
+   console.log('Выбрана клетка: ', tile.id);
+   if (selectedBall) {
+      moveActiveBallTo(x, y);
+   }
+}
+
+function moveActiveBallTo(x, y) {
+   if (!selectedBall) {
+      console.error('Ошибка: Шар не выбран для перемещения.');
+      return;
+   }
+   if (!isCellEmpty(x, y)) {
+      console.error('Ошибка: Указанная клетка не пуста.');
+      return;
+   }
+   const tile = document.getElementById('plate_' + x + '_' + y);
+   selectedBall.parentElement.removeChild(selectedBall);
+   tile.appendChild(selectedBall);
+   selectedBall.classList.remove('active');
+   selectedBall = null;
 }
 
 function setBallAt(x, y, colorName) {
@@ -41,6 +100,7 @@ function setBallAt(x, y, colorName) {
    const ball = document.createElement('div');
    ball.className = 'ball';
    ball.style.backgroundColor = getColorFromPalette(colorName);
+   ball.addEventListener('click', toggleSelectedBall);
    tile.appendChild(ball);
 }
 
@@ -72,16 +132,13 @@ function addBall() {
    if (!isPlaneHasEmptyCells()) {
       return false;
    }
-
    let x, y;
    do {
       x = Math.floor(Math.random() * 10);
       y = Math.floor(Math.random() * 10);
    } while (!isCellEmpty(x, y));
-
    const colors = Object.keys(palette);
    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
    setBallAt(x, y, randomColor);
    return true;
 }
@@ -97,7 +154,7 @@ function addScore(value) {
 }
 
 function updateScoreDisplay() {
-   scoreDisplay.textContent = 'Счет: ' + score;
+   scoreDisplay.textContent = 'Очки: ' + score;
 }
 
 function reset() {
@@ -105,16 +162,18 @@ function reset() {
    container.innerHTML = '';
    createGrid();
    endGameMessage.classList.add('hidden');
-   nextMoveButton.disabled = false
-
+   nextMoveButton.disabled = false;
    const balls = document.querySelectorAll('.ball');
-   balls.forEach(ball => ball.remove());
+   balls.forEach((ball) => ball.remove());
+   placeNewBalls(5);
 }
 
-
-
 function nextMove() {
-   for (let i = 0; i < 5; i++) {
+   placeNewBalls(3);
+}
+
+function placeNewBalls(count) {
+   for (let i = 0; i < count; i++) {
       if (!addBall()) {
          finish();
          return;
@@ -135,14 +194,16 @@ function createGrid() {
          const tile = document.createElement('div');
          tile.className = 'tile';
          tile.id = 'plate_' + i + '_' + j;
-         tile.style.left = (j * 40) + 'px';
-         tile.style.top = (i * 40) + 'px';
+         tile.style.left = j * 40 + 'px';
+         tile.style.top = i * 40 + 'px';
          container.appendChild(tile);
+         tile.addEventListener('click', clickTile);
       }
    }
 }
+
 nextMoveButton.addEventListener('click', nextMove);
 resetButton.addEventListener('click', reset);
 
-
 createGrid();
+reset();

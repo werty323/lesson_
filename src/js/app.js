@@ -68,13 +68,25 @@ function toggleSelectedBall(event) {
 
 function clickTile(event) {
    const tile = event.target;
+
    if (!tile.classList.contains('tile')) {
       return;
    }
+
    const { x, y } = parseCoordinates(tile.id);
    console.log('Выбрана клетка: ', tile.id);
-   if (selectedBall) {
-      moveActiveBallTo(x, y);
+
+   if (!selectedBall) {
+      if (tile.querySelector('.ball')) {
+         toggleSelectedBall({ target: tile.querySelector('.ball') });
+      }
+   } else {
+      if (tile.querySelector('.ball')) {
+         selectedBall.classList.remove('active');
+         toggleSelectedBall({ target: tile.querySelector('.ball') });
+      } else {
+         moveActiveBallTo(x, y);
+      }
    }
 }
 

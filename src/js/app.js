@@ -104,8 +104,9 @@ function moveActiveBallTo(x, y) {
    tile.appendChild(selectedBall);
    selectedBall.classList.remove('active');
    selectedBall = null;
-}
 
+   placeNewBalls(3);
+}
 function setBallAt(x, y, colorName) {
    const tile = document.getElementById('plate_' + x + '_' + y);
    tile.innerHTML = '';
@@ -160,6 +161,109 @@ function resetScore() {
    updateScoreDisplay();
 }
 
+
+
+function checkHorizontalLine(x, y, color) {
+   let line = [{ x, y }];
+   let left = x - 1;
+   let right = x + 1;
+
+   while (left >= 0 && getBallAt(left, y) === color) {
+      line.push({ x: left, y });
+      left--;
+   }
+
+   while (right < 10 && getBallAt(right, y) === color) {
+      line.push({ x: right, y });
+      right++;
+   }
+
+   return line;
+}
+
+function checkVerticalLine(x, y, color) {
+   let line = [{ x, y }];
+   let up = y - 1;
+   let down = y + 1;
+
+   while (up >= 0 && getBallAt(x, up) === color) {
+      line.push({ x, y: up });
+      up--;
+   }
+
+   while (down < 10 && getBallAt(x, down) === color) {
+      line.push({ x, y: down });
+      down++;
+   }
+
+   return line;
+}
+
+function checkDiagonalLine(x, y, color, dx, dy) {
+   let line = [{ x, y }];
+   let nx = x + dx;
+   let ny = y + dy;
+
+   while (nx >= 0 && nx < 10 && ny >= 0 && ny < 10 && getBallAt(nx, ny) === color) {
+      line.push({ x: nx, y: ny });
+      nx += dx;
+      ny += dy;
+   }
+
+   nx = x - dx;
+   ny = y - dy;
+   while (nx >= 0 && nx < 10 && ny >= 0 && ny < 10 && getBallAt(nx, ny) === color) {
+      line.push({ x: nx, y: ny });
+      nx -= dx;
+      ny -= dy;
+   }
+
+   return line;
+}
+
+function checkForMatchesAt(x, y) {
+   const color = getBallAt(x, y);
+   if (!color) return;
+
+   const horizontalLine = checkHorizontalLine(x, y, color);
+   const verticalLine = checkVerticalLine(x, y, color);
+   const diagonalLine1 = checkDiagonalLine(x, y, color, 1, 1);
+   const diagonalLine2 = checkDiagonalLine(x, y, color, 1, -1);
+
+   let totalMatches = 0;
+
+   if (horizontalLine.length >= 5) {
+      totalMatches += horizontalLine.length;
+      clearLine(horizontalLine);
+   }
+   if (verticalLine.length >= 5) {
+      totalMatches += verticalLine.length;
+      clearLine(verticalLine);
+   }
+   if (diagonalLine1.length >= 5) {
+      totalMatches += diagonalLine1.length;
+      clearLine(diagonalLine1);
+   }
+   if (diagonalLine2.length >= 5) {
+      totalMatches += diagonalLine2.length;
+      clearLine(diagonalLine2);
+   }
+
+   if (totalMatches > 0) {
+      addScore(totalMatches * 10);
+   }
+}
+
+function clearLine(line) {
+   line.forEach(({ x, y }) => {
+      const tile = document.getElementById(`plate_${x}_${y}`);
+      const ball = tile.querySelector('.ball');
+      if (ball) {
+         ball.remove();
+      }
+   });
+}
+
 function addScore(value) {
    score += value;
    updateScoreDisplay();
@@ -168,6 +272,7 @@ function addScore(value) {
 function updateScoreDisplay() {
    scoreDisplay.textContent = 'Очки: ' + score;
 }
+
 
 function reset() {
    resetScore();

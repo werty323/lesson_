@@ -179,43 +179,30 @@ function clickTile(event) {
 }
 
 
-
 function moveActiveBallTo(x, y) {
-
    if (!selectedBall) {
-
       console.error('Ошибка: Шар не выбран для перемещения.');
-
       return;
-
    }
-
    if (!isCellEmpty(x, y)) {
-
       console.error('Ошибка: Указанная клетка не пуста.');
-
       return;
-
    }
-
    const tile = document.getElementById('plate_' + x + '_' + y);
-
    selectedBall.parentElement.removeChild(selectedBall);
-
    tile.appendChild(selectedBall);
-
    selectedBall.classList.remove('active');
-
    selectedBall = null;
 
-   checkForMatchesAt(x, y);
-
-   if (checkForMatchesAt(x, y) === 0) {
+   const matches = checkForMatchesAt(x, y);
+   if (matches === 0) {
       placeNewBalls(3);
+      if (!isPlaneHasEmptyCells()) {
+         finish();
+      }
    }
-
-
 }
+
 
 function setBallAt(x, y, colorName) {
 
@@ -563,7 +550,7 @@ function addScore(value) {
 
 function updateScoreDisplay() {
 
-   scoreDisplay.textContent = 'Очки: ' + score;
+   scoreDisplay.textContent = 'Счет: ' + score;
 
 }
 

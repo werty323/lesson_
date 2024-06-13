@@ -8,6 +8,7 @@ import './files/script.js';
 
 ////////////////////////////////////////////////
 
+
 const container = document.getElementById('container');
 
 const nextMoveButton = document.getElementById('nextMoveBtn');
@@ -178,30 +179,49 @@ function clickTile(event) {
 
 }
 
-
 function moveActiveBallTo(x, y) {
+
    if (!selectedBall) {
+
       console.error('Ошибка: Шар не выбран для перемещения.');
+
       return;
    }
    if (!isCellEmpty(x, y)) {
+
       console.error('Ошибка: Указанная клетка не пуста.');
+
       return;
    }
    const tile = document.getElementById('plate_' + x + '_' + y);
+
    selectedBall.parentElement.removeChild(selectedBall);
+
    tile.appendChild(selectedBall);
+
    selectedBall.classList.remove('active');
+
    selectedBall = null;
 
    const matches = checkForMatchesAt(x, y);
+
    if (matches === 0) {
+
       placeNewBalls(3);
+
       if (!isPlaneHasEmptyCells()) {
+
+         finish();
+      }
+   } else {
+
+      if (!isPlaneHasEmptyCells()) {
+
          finish();
       }
    }
 }
+
 
 
 function setBallAt(x, y, colorName) {
@@ -585,27 +605,26 @@ function nextMove() {
 }
 
 
-
 function placeNewBalls(count) {
 
    for (let i = 0; i < count; i++) {
 
       if (!addBall()) {
 
-         finish();
-
          return;
 
       }
       for (let x = 0; x < 10; x++) {
+
          for (let y = 0; y < 10; y++) {
+
             checkForMatchesAt(x, y);
+
          }
       }
-
    }
-
 }
+
 
 
 
@@ -618,6 +637,7 @@ function finish() {
    nextMoveButton.disabled = true;
 
 }
+
 
 
 

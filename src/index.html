@@ -8,14 +8,26 @@
    <div class="wrapper">
       @@include('html/_header.htm',{})
       <div id="container"></div>
-      <button class="next" id="nextMoveBtn">Следующий ход</button>
-      <button class="reset" id="resetBtn">Сброс</button>
+      <button class="next" onmousedown="audio2.play()" id="nextMoveBtn">Следующий ход</button>
+      <button class="reset" onmousedown="audio1.play()" id="resetBtn">Сброс</button>
       <div class="score" id="score">Счет: 0</div>
       <div id="endGameMessage" class="hidden">
          <div class="message"> Игра окончена. Вы набрали <span id="finalScore"></span> </div>
          <button id="closeBtn">Закрыть</button>
       </div>
+      <script>
 
+         const audio1 = new Audio();
+
+         audio1.src = 'files/audio.mp3';
+
+         const audio2 = new Audio();
+
+         audio2.src = 'files/audio2.mp3';
+
+
+
+      </script>
       @@include('html/_footer.htm',{})
    </div>
    @@include('html/_popup.htm',{})

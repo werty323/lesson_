@@ -638,7 +638,24 @@ function finish() {
 
 }
 
+function nextMoveHandler() {
 
+   audio2.play();
+
+   nextMove();
+}
+
+function resetHandler() {
+
+   audio1.play();
+
+   reset();
+}
+
+
+nextMoveButton.addEventListener('click', nextMoveHandler);
+
+resetButton.addEventListener('click', resetHandler);
 
 
 function createGrid() {
@@ -664,14 +681,24 @@ function createGrid() {
       }
 
    }
+   const box = document.createElement('div');
 
+   box.className = 'box';
+
+   box.style.width = '10px';
+
+   box.style.height = '10px';
+
+   box.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+
+   tile.appendChild(box);
+
+   tile.addEventListener('click', clickTile);
 }
 
 
 
-nextMoveButton.addEventListener('click', nextMove);
 
-resetButton.addEventListener('click', reset);
 
 
 

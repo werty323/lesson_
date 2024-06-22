@@ -656,14 +656,9 @@ function resetHandler() {
 nextMoveButton.addEventListener('click', nextMoveHandler);
 
 resetButton.addEventListener('click', resetHandler);
-
-
 function createGrid() {
-
    for (let i = 0; i < 10; i++) {
-
       for (let j = 0; j < 10; j++) {
-
          const tile = document.createElement('div');
 
          tile.className = 'tile';
@@ -678,23 +673,18 @@ function createGrid() {
 
          tile.addEventListener('click', clickTile);
 
+         const box = document.createElement('div');
+
+         box.className = 'box';
+
+         tile.appendChild(box);
+
+         tile.addEventListener('click', clickTile);
       }
-
    }
-   const box = document.createElement('div');
-
-   box.className = 'box';
-
-   box.style.width = '10px';
-
-   box.style.height = '10px';
-
-   box.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-
-   tile.appendChild(box);
-
-   tile.addEventListener('click', clickTile);
 }
+
+
 
 
 

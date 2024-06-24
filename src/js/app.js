@@ -223,13 +223,19 @@ function moveActiveBallTo(x, y) {
 }
 
 
-
 function setBallAt(x, y, colorName) {
 
    const tile = document.getElementById('plate_' + x + '_' + y);
+   
+   const existingBall = tile.querySelector('.ball');
 
-   tile.innerHTML = '';
+   if (existingBall) {
 
+      existingBall.remove();
+
+   }
+
+   
    const ball = document.createElement('div');
 
    ball.className = 'ball';
@@ -239,7 +245,6 @@ function setBallAt(x, y, colorName) {
    ball.addEventListener('click', toggleSelectedBall);
 
    tile.appendChild(ball);
-
 }
 
 

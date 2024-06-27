@@ -180,7 +180,6 @@ function clickTile(event) {
 }
 
 function moveActiveBallTo(x, y) {
-
    if (!selectedBall) {
 
       console.error('Ошибка: Шар не выбран для перемещения.');
@@ -193,6 +192,15 @@ function moveActiveBallTo(x, y) {
 
       return;
    }
+
+   const { x: fromX, y: fromY } = parseCoordinates(selectedBall.parentElement.id);
+
+   console.log('Текущие координаты шара:', fromX, fromY);
+
+   const path = findWay(fromX, fromY, x, y);
+
+   console.log('Найденный путь:', path);
+
    const tile = document.getElementById('plate_' + x + '_' + y);
 
    selectedBall.parentElement.removeChild(selectedBall);
@@ -222,11 +230,10 @@ function moveActiveBallTo(x, y) {
    }
 }
 
-
 function setBallAt(x, y, colorName) {
 
    const tile = document.getElementById('plate_' + x + '_' + y);
-   
+
    const existingBall = tile.querySelector('.ball');
 
    if (existingBall) {
@@ -235,7 +242,7 @@ function setBallAt(x, y, colorName) {
 
    }
 
-   
+
    const ball = document.createElement('div');
 
    ball.className = 'ball';
@@ -694,7 +701,10 @@ function createGrid() {
 
 
 
+function findWay(startX, startY, endX, endY) {
 
+   return [];
+}
 
 
 createGrid();

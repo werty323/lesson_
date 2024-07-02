@@ -178,53 +178,40 @@ function clickTile(event) {
    }
 
 }
-
 function moveActiveBallTo(x, y) {
    if (!selectedBall) {
-
       console.error('Ошибка: Шар не выбран для перемещения.');
-
       return;
    }
    if (!isCellEmpty(x, y)) {
-
       console.error('Ошибка: Указанная клетка не пуста.');
-
       return;
    }
 
    const { x: fromX, y: fromY } = parseCoordinates(selectedBall.parentElement.id);
-
    console.log('Текущие координаты шара:', fromX, fromY);
 
    const path = findWay(fromX, fromY, x, y);
-
+   if (path === null) {
+      console.log("Путь не найден");
+      return;
+   }
    console.log('Найденный путь:', path);
 
    const tile = document.getElementById('plate_' + x + '_' + y);
-
    selectedBall.parentElement.removeChild(selectedBall);
-
    tile.appendChild(selectedBall);
-
    selectedBall.classList.remove('active');
-
    selectedBall = null;
 
    const matches = checkForMatchesAt(x, y);
-
    if (matches === 0) {
-
       placeNewBalls(3);
-
       if (!isPlaneHasEmptyCells()) {
-
          finish();
       }
    } else {
-
       if (!isPlaneHasEmptyCells()) {
-
          finish();
       }
    }
@@ -700,10 +687,32 @@ function createGrid() {
 
 
 
-
 function findWay(startX, startY, endX, endY) {
+   let path = [];
 
-   return [];
+   // Перемещение по оси X
+   if (startX <= endX) {
+      for (let x = startX; x <= endX; x++) {
+         path.push([x, startY]);
+      }
+   } else {
+      for (let x = startX; x >= endX; x--) {
+         path.push([x, startY]);
+      }
+   }
+
+   // Перемещение по оси Y
+   if (startY <= endY) {
+      for (let y = startY + 1; y <= endY; y++) { // +1, чтобы не дублировать (endX, startY)
+         path.push([endX, y]);
+      }
+   } else {
+      for (let y = startY - 1; y >= endY; y--) { // -1, чтобы не дублировать (endX, startY)
+         path.push([endX, y]);
+      }
+   }
+
+   return path.length > 0 ? path : null;
 }
 
 

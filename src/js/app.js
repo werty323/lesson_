@@ -686,11 +686,45 @@ function createGrid() {
 
 
 
+function simulateFindWay() {
 
+   var moves = findway();
+
+   if (moves !== null) {
+
+      applySteps(moves);
+
+   }
+}
+
+function ClearStepAnimation() {
+
+   var elements = document.querySelectorAll('.step-active');
+
+   elements.forEach(function (element) {
+
+      element.classList.remove('step-active');
+
+   });
+}
+function applySteps(moves) {
+
+   moves.forEach(function (move) {
+
+      var element = document.querySelector(`#${move}`);
+
+      if (element) {
+
+         element.classList.add('step-active');
+
+      }
+   });
+   setTimeout(ClearStepAnimation, 2000);
+}
 function findWay(startX, startY, endX, endY) {
    let path = [];
 
-   // Перемещение по оси X
+
    if (startX <= endX) {
       for (let x = startX; x <= endX; x++) {
          path.push([x, startY]);
@@ -701,20 +735,19 @@ function findWay(startX, startY, endX, endY) {
       }
    }
 
-   // Перемещение по оси Y
+
    if (startY <= endY) {
-      for (let y = startY + 1; y <= endY; y++) { // +1, чтобы не дублировать (endX, startY)
+      for (let y = startY + 1; y <= endY; y++) {
          path.push([endX, y]);
       }
    } else {
-      for (let y = startY - 1; y >= endY; y--) { // -1, чтобы не дублировать (endX, startY)
+      for (let y = startY - 1; y >= endY; y--) {
          path.push([endX, y]);
       }
    }
 
    return path.length > 0 ? path : null;
 }
-
 
 createGrid();
 

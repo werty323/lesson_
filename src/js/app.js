@@ -198,6 +198,8 @@ function moveActiveBallTo(x, y) {
    }
    console.log('Найденный путь:', path);
 
+   applySteps(path);
+
    const tile = document.getElementById('plate_' + x + '_' + y);
    selectedBall.parentElement.removeChild(selectedBall);
    tile.appendChild(selectedBall);
@@ -686,17 +688,6 @@ function createGrid() {
 
 
 
-function simulateFindWay() {
-
-   var moves = findway();
-
-   if (moves !== null) {
-
-      applySteps(moves);
-
-   }
-}
-
 function ClearStepAnimation() {
 
    var elements = document.querySelectorAll('.step-active');
@@ -707,20 +698,27 @@ function ClearStepAnimation() {
 
    });
 }
+
 function applySteps(moves) {
 
    moves.forEach(function (move) {
 
-      var element = document.querySelector(`#${move}`);
+      const [x, y] = move.split('_');
 
-      if (element) {
+      const tile = document.getElementById('plate_' + x + '_' + y);
 
-         element.classList.add('step-active');
+
+      if (tile) {
+
+         const box = tile.querySelector('.box');
+
+         box.classList.add('step-active');
 
       }
    });
-   setTimeout(ClearStepAnimation, 2000);
+   setTimeout(ClearStepAnimation, 1000);
 }
+
 function findWay(startX, startY, endX, endY) {
    let path = [];
 

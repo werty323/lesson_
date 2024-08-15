@@ -593,7 +593,7 @@ function reset() {
 
    balls.forEach((ball) => ball.remove());
 
-   placeNewBalls(5);
+   placeNewBalls(5, 0);
 
 }
 
@@ -606,23 +606,26 @@ function nextMove() {
 }
 
 
-function placeNewBalls(count) {
+function placeNewBalls(count, delay = 1200) {
 
    for (let i = 0; i < count; i++) {
 
-      if (!addBall()) {
+      setTimeout(() => {
 
-         return;
+         if (!addBall()) {
 
-      }
-      for (let x = 0; x < 10; x++) {
-
-         for (let y = 0; y < 10; y++) {
-
-            checkForMatchesAt(x, y);
+            return;
 
          }
-      }
+         for (let x = 0; x < 10; x++) {
+
+            for (let y = 0; y < 10; y++) {
+
+               checkForMatchesAt(x, y);
+
+            }
+         }
+      }, delay * i);
    }
 }
 
@@ -703,7 +706,7 @@ function applySteps(moves) {
 
    moves.forEach(function (move) {
 
-      const [x, y] = move.split('_');
+      const [x, y] = move;
 
       const tile = document.getElementById('plate_' + x + '_' + y);
 

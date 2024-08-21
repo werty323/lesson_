@@ -605,28 +605,29 @@ function nextMove() {
 
 }
 
-
 function placeNewBalls(count, delay = 1200) {
 
-   for (let i = 0; i < count; i++) {
+   setTimeout(() => {
 
-      setTimeout(() => {
+      for (let i = 0; i < count; i++) {
 
          if (!addBall()) {
+
+            finish();
 
             return;
 
          }
-         for (let x = 0; x < 10; x++) {
+      }
+      for (let x = 0; x < 10; x++) {
 
-            for (let y = 0; y < 10; y++) {
+         for (let y = 0; y < 10; y++) {
 
-               checkForMatchesAt(x, y);
+            checkForMatchesAt(x, y);
 
-            }
          }
-      }, delay * i);
-   }
+      }
+   }, delay);
 }
 
 

@@ -317,6 +317,8 @@ function addBall() {
 
    if (!isPlaneHasEmptyCells()) {
 
+      finish();
+
       return false;
 
    }
@@ -724,32 +726,85 @@ function applySteps(moves) {
 }
 
 function findWay(startX, startY, endX, endY) {
-   let path = [];
+   const openList = [];
+   const closedList = [];
+   const cameFrom = {};
 
+   openList.push({ x: startX, y: startY, g: 0, h: heuristic(startX, startY, endX, endY) });
 
-   if (startX <= endX) {
-      for (let x = startX; x <= endX; x++) {
-         path.push([x, startY]);
+   while (openList.length > 0) {
+      // Найти узел с наименьшей стоимостью F
+      openList.sort((a, b) => (a.g + a.h) - (b.g + b.h));
+      const current = openList.shift();
+      const { x, y } = current;
+
+      // Если мы достигли конечной точки
+      if (x === endX && y === endY) {
+         return reconstructPath(cameFrom, endX, endY);
       }
-   } else {
-      for (let x = startX; x >= endX; x--) {
-         path.push([x, startY]);
+
+      closedList.push(current);
+
+      // Проверяем соседей
+      const neighbors = getNeighbors(x, y);
+      for (const neighbor of neighbors) {
+         const { nx, ny } = neighbor;
+
+         if (!isCellEmpty(nx, ny) || closedList.find((node) => node.x === nx && node.y === ny)) {
+            continue;
+         }
+
+         const tentativeG = current.g + 1; // Стоимость перехода к соседу
+
+         const openNode = openList.find((node) => node.x === nx && node.y === ny);
+         if (!openNode || tentativeG < openNode.g) {
+            cameFrom[`${nx},${ny}`] = { x, y };
+            const h = heuristic(nx, ny, endX, endY);
+
+            if (!openNode) {
+               openList.push({ x: nx, y: ny, g: tentativeG, h });
+            } else {
+               openNode.g = tentativeG;
+               openNode.h = h;
+            }
+         }
       }
    }
 
-
-   if (startY <= endY) {
-      for (let y = startY + 1; y <= endY; y++) {
-         path.push([endX, y]);
-      }
-   } else {
-      for (let y = startY - 1; y >= endY; y--) {
-         path.push([endX, y]);
-      }
-   }
-
-   return path.length > 0 ? path : null;
+   nextMoveHandler(); // Проигрываем звук, если путь не найден
+   return null; // Путь не найден
 }
+
+function heuristic(x1, y1, x2, y2) {
+   // Вычисление эвристического расстояния (евклидово расстояние)
+   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+}
+
+function getNeighbors(x, y) {
+   const neighbors = [];
+
+   // Проверяем все 4 направления (вверх, вниз, влево, вправо)
+   if (x > 0) neighbors.push({ nx: x - 1, ny: y });
+   if (x < 9) neighbors.push({ nx: x + 1, ny: y });
+   if (y > 0) neighbors.push({ nx: x, ny: y - 1 });
+   if (y < 9) neighbors.push({ nx: x, ny: y + 1 });
+
+   return neighbors;
+}
+
+function reconstructPath(cameFrom, x, y) {
+   const path = [];
+   let current = { x, y };
+
+   while (cameFrom[`${current.x},${current.y}`]) {
+      path.push([current.x, current.y]);
+      current = cameFrom[`${current.x},${current.y}`];
+   }
+
+   path.push([current.x, current.y]); // Добавляем начальную точку
+   return path.reverse();
+}
+
 
 createGrid();
 
